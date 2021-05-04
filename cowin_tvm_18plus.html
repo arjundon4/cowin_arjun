@@ -69,9 +69,13 @@
 
   raiseAlert(available, agelimit, centerName){
     if(available > 0 && agelimit == 18){
+		var mp3_url = 'https://freesound.org/data/previews/80/80921_1022651-lq.mp3';
+		var sound = new Audio(mp3_url);
+		sound.play()
         !this.state.alertRaised && alert("Slots available at " + centerName);
         document.getElementById("root").style = "background:green"
         this.state.alertRaised = true;
+		sound.pause();
     } else {
         document.getElementById("root").style = "background:aqua"
     } 
