@@ -74,7 +74,7 @@
 		var mp3_url = 'https://freesound.org/data/previews/80/80921_1022651-lq.mp3';
 		var sound = new Audio(mp3_url);
 		sound.play()
-        !this.state.alertRaised && alert("Slots available at " + centerName);
+        !this.state.alertRaised && alert(available + "Slots available at " + centerName);
         document.getElementById("root").style = "background:green"
         this.state.alertRaised = true;
 		sound.pause();
