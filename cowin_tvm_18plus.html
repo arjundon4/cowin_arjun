@@ -9,12 +9,31 @@
     <!-- Don't use this in production: -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
-  <body>
+  <body onload="javascript:getTodaysDate()">
      <input id="date" value="03-05-2021"/>
     <div id="root">
        
     </div>
     <script type="text/babel">
+	
+	function getTodaysDate() {
+		var today = new Date();
+		var dd = today.getDate();
+		
+		var mm = today.getMonth()+1; 
+		var yyyy = today.getFullYear();
+		if(dd<10) 
+		{
+			dd='0'+dd;
+		} 
+		
+		if(mm<10) 
+		{
+			mm='0'+mm;
+		} 
+		today = dd+'-'+mm+'-'+yyyy;
+		document.getElementById("date").value = today;
+	}
 
      class MyComponent extends React.Component {
 	  constructor(props) {
@@ -67,12 +86,12 @@
       )
   }
 
-  raiseAlert(available, agelimit, centerName){
-    if(available > 0 && agelimit == 18){
+  raiseAlert(session, centerName, address, pincode){
+    if(session.available_capacity > 0 && session.min_age_limit == 18){
 		var mp3_url = 'https://freesound.org/data/previews/80/80921_1022651-lq.mp3';
 		var sound = new Audio(mp3_url);
 		sound.play()
-        !this.state.alertRaised && alert(available + "Slots available at " + centerName);
+        !this.state.alertRaised && alert(session.available_capacity + " Slots available at " + centerName + " with pincode: " + pincode + " for Date: " + session.date);
         document.getElementById("root").style = "background:green"
         this.state.alertRaised = true;
 		sound.pause();
@@ -100,7 +119,7 @@
 			  {centers.map(item => (
 				<li key={item.center_id}>
 				   {item.name} : {item.sessions.map( session => ( 
-                        <p> Date : {session.date} Available capacity : {session.available_capacity} {this.raiseAlert(session.available_capacity, session.min_age_limit, item.name)}</p> 
+                        <p> Date : {session.date} Available capacity : {session.available_capacity} {this.raiseAlert(session, item.name, item.address, item.pincode)}</p>
                         ) ) }
 				</li>
 			  ))}
