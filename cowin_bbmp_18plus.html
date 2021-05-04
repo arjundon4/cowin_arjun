@@ -54,6 +54,7 @@
             isLoaded: true,
             centers: result.centers
           });
+		  render();
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -67,9 +68,9 @@
       )
   }
 
-  raiseAlert(available, agelimit){
+  raiseAlert(available, agelimit, centerName){
     if(available > 0 && agelimit == 18){
-        !this.state.alertRaised && alert("Slots available");
+        !this.state.alertRaised && alert("Slots available at " + centerName);
         document.getElementById("root").style = "background:green"
         this.state.alertRaised = true;
     } else {
@@ -96,7 +97,7 @@
 			  {centers.map(item => (
 				<li key={item.center_id}>
 				   {item.name} : {item.sessions.map( session => ( 
-                        <p> Date : {session.date} Available capacity : {session.available_capacity} {this.raiseAlert(session.available_capacity, session.min_age_limit)}</p> 
+                        <p> Date : {session.date} Available capacity : {session.available_capacity} {this.raiseAlert(session.available_capacity, session.min_age_limit, item.name)}</p> 
                         ) ) }
 				</li>
 			  ))}
